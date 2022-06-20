@@ -8,7 +8,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row justify="center" align="top">
+    <v-row justify="center">
       <v-col v-for="chartProps in chartList" :key="chartProps.name" cols="12" lg="6">
         <ChartViewer :title="chartProps.name" :chart-data="chartProps.data" />
       </v-col>
