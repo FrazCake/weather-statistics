@@ -7,12 +7,14 @@ const getForecast = async (longitude: number, latitude: number, hourly: string, 
   return (await axios.get(forecastUrl, { params: { latitude, longitude, hourly, past_days: pastDays } })).data;
 };
 
-const getTemperatures = (longitude: number, latitude: number, pastDays: number) => {
-  return getForecast(longitude, latitude, 'temperature_2m', pastDays);
+const getTemperatures = async (longitude: number, latitude: number, pastDays: number) => {
+  const forecast = await getForecast(longitude, latitude, 'temperature_2m', pastDays);
+  return { data: forecast.hourly.precipitation, time: forecast.hourly.time };
 };
 
-const getPrecipitations = (longitude: number, latitude: number, pastDays: number) => {
-  return getForecast(longitude, latitude, 'precipitation', pastDays);
+const getPrecipitations = async (longitude: number, latitude: number, pastDays: number) => {
+  const forecast = await getForecast(longitude, latitude, 'precipitation', pastDays);
+  return { data: forecast.hourly.precipitation, time: forecast.hourly.time };
 };
 
 // Workaround because by using a cors proxy it seems that queristring splitted by comma are broken
@@ -21,10 +23,7 @@ const getWeatherInfo = async (longitude: number, latitude: number, pastDays: num
   const precipitationDataPromise = getPrecipitations(longitude, latitude, pastDays);
   const weatherPromises = [temperatureDataPromise, precipitationDataPromise];
   const [temperatureData, precipitationData] = await Promise.all(weatherPromises);
-  return {
-    temperatureData,
-    precipitationData,
-  };
+  return { temperatureData, precipitationData };
 };
 
 export default {

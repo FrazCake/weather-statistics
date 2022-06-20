@@ -10,7 +10,7 @@
     </v-row>
     <v-row justify="center">
       <v-col v-for="chartProps in chartList" :key="chartProps.name" cols="12" lg="6">
-        <ChartViewer :title="chartProps.name" :chart-data="chartProps.data" />
+        <ChartViewer :title="chartProps.name" :chart-data="chartProps.data" :labels="chartProps.labels" />
       </v-col>
     </v-row>
     <pre>{{ chartList }}</pre>
@@ -30,8 +30,8 @@ export default {
     try {
       const weatherInfo = await weatherService.getWeatherInfo(mockLongitude, mockLatitude, 2);
       const chartList = [
-        { name: 'Temperature', data: weatherInfo.temperatureData },
-        { name: 'Precipitations', data: weatherInfo.precipitationData },
+        { name: 'Temperature', data: weatherInfo.temperatureData.data, labels: weatherInfo.temperatureData.time },
+        { name: 'Precipitations', data: weatherInfo.precipitationData.data, labels: weatherInfo.temperatureData.time },
       ];
       return { chartList };
     } catch (error) {
