@@ -9,7 +9,7 @@ const getForecast = async (longitude: number, latitude: number, hourly: string, 
 
 const getTemperatures = async (longitude: number, latitude: number, pastDays: number) => {
   const forecast = await getForecast(longitude, latitude, 'temperature_2m', pastDays);
-  return { data: forecast.hourly.precipitation, time: forecast.hourly.time };
+  return { data: forecast.hourly.temperature_2m, time: forecast.hourly.time };
 };
 
 const getPrecipitations = async (longitude: number, latitude: number, pastDays: number) => {

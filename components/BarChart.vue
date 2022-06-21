@@ -1,3 +1,16 @@
+<template>
+  <Bar
+    :chart-options="chartOptions"
+    :chart-data="dataset"
+    :chart-id="chartId"
+    :dataset-id-key="datasetIdKey"
+    :plugins="plugins"
+    :css-classes="cssClasses"
+    :styles="styles"
+    :width="width"
+    :height="height"
+  />
+</template>
 <script>
 import { Bar } from 'vue-chartjs/legacy';
 import { Chart as ChartJS, Title, Tooltip, Legend, BarElement, CategoryScale, LinearScale } from 'chart.js';
@@ -36,17 +49,29 @@ export default {
       type: Object,
       default: () => {},
     },
+    rawData: {
+      type: Array,
+      required: true,
+    },
+    labels: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
-      chartData: {
-        labels: ['January', 'February', 'March'],
-        datasets: [{ data: [40, 20, 12] }],
-      },
       chartOptions: {
         responsive: true,
       },
     };
+  },
+  computed: {
+    dataset() {
+      return {
+        datasets: [{ data: this.rawData }],
+        labels: this.labels,
+      };
+    },
   },
 };
 </script>

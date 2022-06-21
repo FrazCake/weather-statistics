@@ -3,7 +3,7 @@
     <!-- <v-img src="https://cdn.vuetifyjs.com/images/cards/sunshine.jpg" height="400px"></v-img> -->
     <v-card-title> {{ title }} </v-card-title>
     <v-card-text>
-      <BarChart :data="chartData" :labels="labels" />
+      <BarChart :raw-data="chartData" :labels="labels" />
     </v-card-text>
 
     <v-card-actions>
